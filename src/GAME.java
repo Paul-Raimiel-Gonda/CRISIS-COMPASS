@@ -1,7 +1,7 @@
 import javax.swing.*;
 import forms.*;
 
-
+//MAIN FILE
 public class GAME {
     public static void main(String[] args) {
         JFrame frame = new JFrame("GAME: Gaming Access and Media Emporium - Login");
