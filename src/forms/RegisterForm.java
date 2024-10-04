@@ -11,6 +11,7 @@ public class RegisterForm {
     private JPasswordField passwordField;
     private JButton registerButton;
     private JPanel registerPanel;
+    private JButton button1;
 
     public RegisterForm() {
         registerButton.addActionListener(new ActionListener() {
@@ -18,6 +19,7 @@ public class RegisterForm {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
+
 
                 if (!username.isEmpty() && !password.isEmpty()) {
                     registerUser(username, password);
@@ -55,6 +57,7 @@ public class RegisterForm {
         frame.setContentPane(new RegisterForm().getPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
 
     }
