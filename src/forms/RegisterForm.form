@@ -36,7 +36,7 @@
         </children>
       </grid>
       <grid id="88378" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
-        <margin top="0" left="0" bottom="0" right="0"/>
+        <margin top="0" left="40" bottom="0" right="0"/>
         <constraints/>
         <properties>
           <background color="-12311415"/>
@@ -51,7 +51,7 @@
             <properties>
               <font name="OpenSymbol" size="72" style="1"/>
               <foreground color="-6362641"/>
-              <text value="REGISTER MENU"/>
+              <text value="REGISTER "/>
             </properties>
           </component>
           <vspacer id="8de2">
