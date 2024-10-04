@@ -1,4 +1,5 @@
 package forms;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,21 +12,34 @@ public class RegisterForm {
     private JPasswordField passwordField;
     private JButton registerButton;
     private JPanel registerPanel;
-    private JButton button1;
+    private JLabel REGISTERMENULabel;
+    private JButton returnButton;
+    private JFrame frame;
 
-    public RegisterForm() {
+    // Updated constructor to accept the current frame
+    public RegisterForm(JFrame frame) {
+        this.frame = frame;
+
+        // Register button functionality
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
 
-
                 if (!username.isEmpty() && !password.isEmpty()) {
                     registerUser(username, password);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+                    JOptionPane.showMessageDialog(frame, "Please fill in all fields!");
                 }
+            }
+        });
+
+        // Return button functionality
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                returnToLoginForm(); // Return to the login form
             }
         });
     }
@@ -41,11 +55,25 @@ public class RegisterForm {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                JOptionPane.showMessageDialog(null, "Registration successful!");
+                JOptionPane.showMessageDialog(frame, "Registration successful!");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "User registration failed: " + e.getMessage());
+            JOptionPane.showMessageDialog(frame, "User registration failed: " + e.getMessage());
         }
+    }
+
+    // Method to handle return to the login form
+    private void returnToLoginForm() {
+        // Close the current RegisterForm frame
+        frame.dispose();
+
+        // Create and show the LoginForm
+        JFrame loginFrame = new JFrame("Login Form");
+        loginFrame.setContentPane(new LoginForm(loginFrame).getPanel());
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginFrame.pack();
+        loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Make fullscreen
+        loginFrame.setVisible(true);
     }
 
     public JPanel getPanel() {
@@ -54,12 +82,10 @@ public class RegisterForm {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Register Form");
-        frame.setContentPane(new RegisterForm().getPanel());
+        frame.setContentPane(new RegisterForm(frame).getPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
-
     }
-
 }

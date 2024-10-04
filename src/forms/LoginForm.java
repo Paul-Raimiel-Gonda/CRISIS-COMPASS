@@ -1,4 +1,5 @@
 package forms;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ public class LoginForm {
 
     public LoginForm(JFrame frame) {
         this.frame = frame;  // Initialize the frame reference
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -27,10 +29,11 @@ public class LoginForm {
                 if (!username.isEmpty() && !password.isEmpty()) {
                     loginUserOrAdmin(username, password);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Please enter your username and password."); // Use frame here
+                    JOptionPane.showMessageDialog(frame, "Please enter your username and password.");
                 }
             }
         });
+
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,11 +41,15 @@ public class LoginForm {
             }
         });
     }
+
     private void openRegisterForm() {
+        // Close the current frame (LoginForm) and open RegisterForm
+        frame.dispose(); // Close the LoginForm frame
         JFrame registerFrame = new JFrame("Register");
-        registerFrame.setContentPane(new RegisterForm().getPanel()); // Assuming RegisterForm has a getPanel() method
-        registerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        registerFrame.setContentPane(new RegisterForm(registerFrame).getPanel()); // Pass the registerFrame to RegisterForm
+        registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         registerFrame.pack();
+        registerFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen
         registerFrame.setVisible(true);
     }
 
@@ -118,7 +125,7 @@ public class LoginForm {
         frame.setContentPane(new LoginForm(frame).getPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen
         frame.setVisible(true);
     }
-
 }
