@@ -6,7 +6,7 @@
     </constraints>
     <properties>
       <background color="-12311415"/>
-      <preferredSize width="740" height="1000"/>
+      <preferredSize width="1920" height="1000"/>
     </properties>
     <border type="none"/>
     <children>
@@ -136,8 +136,8 @@
               <font name="OpenSymbol" size="28"/>
               <foreground color="-16777216"/>
               <icon value="resources/return.png"/>
-              <iconTextGap value="35"/>
-              <text value="Return"/>
+              <iconTextGap value="10"/>
+              <text value="RETURN"/>
             </properties>
           </component>
           <vspacer id="12c29">

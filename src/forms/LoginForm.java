@@ -3,6 +3,8 @@ package forms;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +22,7 @@ public class LoginForm {
     public LoginForm(JFrame frame) {
         this.frame = frame;  // Initialize the frame reference
 
+        // Login button functionality
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,10 +37,23 @@ public class LoginForm {
             }
         });
 
+        // Register button functionality
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 openRegisterForm(); // Call method to open registration form
+            }
+        });
+
+        // Add a listener to handle window resizing (fullscreen to windowed)
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Check if the window is NOT in fullscreen mode
+                if (frame.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
+                    // Set the frame to a small minimum size when windowed
+                    frame.setSize(1920, 1080); // Minimum size when not fullscreen
+                }
             }
         });
     }
@@ -125,7 +141,7 @@ public class LoginForm {
         frame.setContentPane(new LoginForm(frame).getPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);// Start in fullscreen
         frame.setVisible(true);
     }
 }

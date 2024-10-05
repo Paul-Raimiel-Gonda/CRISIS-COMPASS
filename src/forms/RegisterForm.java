@@ -72,7 +72,8 @@ public class RegisterForm {
         loginFrame.setContentPane(new LoginForm(loginFrame).getPanel());
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.pack();
-        loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Make fullscreen
+        loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        loginFrame.setSize(1920, 1080);// Make fullscreen
         loginFrame.setVisible(true);
     }
 
@@ -86,6 +87,7 @@ public class RegisterForm {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setSize(1920, 1080);
         frame.setVisible(true);
     }
 }
