@@ -23,7 +23,7 @@
               <alignmentX value="0.0"/>
               <alignmentY value="0.0"/>
               <horizontalAlignment value="2"/>
-              <icon value="resources/TITLE.png"/>
+              <icon value="resources/TITLE2.png"/>
               <maximumSize width="10000" height="10800"/>
               <opaque value="false"/>
               <preferredSize width="1140" height="1080"/>
@@ -51,7 +51,7 @@
             <properties>
               <font name="Agency FB" size="72" style="1"/>
               <foreground color="-796326"/>
-              <text value="REGISTER "/>
+              <text value="REGISTER MENU"/>
             </properties>
           </component>
           <vspacer id="8de2">
