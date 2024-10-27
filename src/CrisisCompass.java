@@ -2,7 +2,7 @@ import javax.swing.*;
 import forms.*;
 
 //MAIN FILE
-public class GAME {
+public class CrisisCompass {
     public static void main(String[] args) {
         JFrame frame = new JFrame("CRISIS COMPASS: Disaster Preparation Assistant - Login");
         frame.setContentPane(new LoginForm(frame).getPanel());
