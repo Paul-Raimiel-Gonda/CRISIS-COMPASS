@@ -1,2 +1,2 @@
-# GAME-Gaming-Access-and-Media-Emporium
+# CRISIS COMPASS - Disaster Preparation Assistant
 OOP Project CS2101
