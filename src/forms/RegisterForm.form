@@ -5,7 +5,7 @@
       <xy x="215" y="176" width="2721" height="1090"/>
     </constraints>
     <properties>
-      <background color="-12311415"/>
+      <background color="-13025727"/>
       <preferredSize width="1920" height="1000"/>
     </properties>
     <border type="none"/>
@@ -13,7 +13,7 @@
       <grid id="ac1e8" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="1">
         <constraints/>
         <properties>
-          <background color="-12311415"/>
+          <background color="-2121145"/>
         </properties>
         <border type="none"/>
         <children>
@@ -35,11 +35,11 @@
           </component>
         </children>
       </grid>
-      <grid id="88378" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
+      <grid id="88378" layout-manager="GridLayoutManager" row-count="12" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
         <margin top="0" left="40" bottom="0" right="0"/>
         <constraints/>
         <properties>
-          <background color="-12311415"/>
+          <background color="-13025727"/>
           <preferredSize width="770" height="1080"/>
         </properties>
         <border type="none"/>
@@ -49,8 +49,8 @@
               <grid row="1" column="1" row-span="2" col-span="2" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="OpenSymbol" size="72" style="1"/>
-              <foreground color="-6362641"/>
+              <font name="Agency FB" size="72" style="1"/>
+              <foreground color="-796326"/>
               <text value="REGISTER "/>
             </properties>
           </component>
@@ -81,7 +81,7 @@
           </component>
           <component id="9cc42" class="javax.swing.JLabel">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="5" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="OpenSymbol" size="28"/>
@@ -109,7 +109,7 @@
               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-6362641"/>
+              <background color="-796326"/>
               <font name="OpenSymbol" size="28"/>
               <foreground color="-16777216"/>
               <text value="REGISTER"/>
@@ -131,7 +131,7 @@
             </constraints>
             <properties>
               <actionCommand value="        Return"/>
-              <background color="-6362641"/>
+              <background color="-796326"/>
               <focusable value="false"/>
               <font name="OpenSymbol" size="28"/>
               <foreground color="-16777216"/>
@@ -161,6 +161,11 @@
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
+          <vspacer id="13ae5">
+            <constraints>
+              <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
         </children>
       </grid>
     </children>
