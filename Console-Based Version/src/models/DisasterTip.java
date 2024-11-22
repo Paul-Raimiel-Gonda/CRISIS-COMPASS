@@ -1,72 +1,61 @@
 package models;
 
 /**
- * Represents a tip or advice for managing a specific disaster.
- * Organized into categories such as "Before", "During", "After", and "Emergency Situations".
+ * Represents a tip related to a specific disaster type and situation.
  */
 public class DisasterTip {
 
-    // Encapsulated fields
-    private int tipId; // Unique identifier for the tip
-    private String disasterType; // Example: "Flood", "Earthquake"
-    private TipCategory category; // Enum for the tip category
-    private String description; // The actual tip content
+    private int id;
+    private String disasterType;
+    private TipCategory category;
+    private String tip;
 
     /**
-     * Enum to categorize disaster tips.
+     * Enum for categorizing disaster tips.
      */
     public enum TipCategory {
         BEFORE, DURING, AFTER, EMERGENCY
     }
 
-    // Constructor
-    public DisasterTip(int tipId, String disasterType, TipCategory category, String description) {
-        this.tipId = tipId;
+    /**
+     * Constructor for DisasterTip.
+     *
+     * @param id            Unique identifier for the tip.
+     * @param disasterType  The type of disaster (e.g., "Flood", "Earthquake").
+     * @param category      The category of the tip (e.g., BEFORE, DURING).
+     * @param tip           The tip text.
+     */
+    public DisasterTip(int id, String disasterType, TipCategory category, String tip) {
+        this.id = id;
         this.disasterType = disasterType;
         this.category = category;
-        this.description = description;
+        this.tip = tip;
     }
 
-    // Getters and setters
-    public int getTipId() {
-        return tipId;
+    // Getter for ID
+    public int getId() {
+        return id;
     }
 
-    public void setTipId(int tipId) {
-        this.tipId = tipId;
-    }
-
+    // Getter for disaster type
     public String getDisasterType() {
         return disasterType;
     }
 
-    public void setDisasterType(String disasterType) {
-        this.disasterType = disasterType;
-    }
-
+    // Getter for category
     public TipCategory getCategory() {
         return category;
     }
 
-    public void setCategory(TipCategory category) {
-        this.category = category;
+    // Getter for the tip text
+    public String getTip() {
+        return tip;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Displays the tip details.
-     */
+    // Displays the details of the tip
     public void displayTipDetails() {
-        System.out.println("Tip ID: " + tipId);
         System.out.println("Disaster Type: " + disasterType);
         System.out.println("Category: " + category);
-        System.out.println("Description: " + description);
+        System.out.println("Tip: " + tip);
     }
 }

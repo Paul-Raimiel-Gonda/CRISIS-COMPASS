@@ -1,82 +1,74 @@
 package services;
 
 import models.User;
+import utils.HashingUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Service class for managing user-related operations.
- * Encapsulates business logic for user authentication, updates, and retrieval.
+ * Service class to handle user-related operations like registration and login.
  */
 public class UserService {
 
-    // Simulating a user database using a HashMap for demonstration
-    private Map<Integer, User> userDatabase;
+    // Encapsulated user database simulation (can be replaced by real DB logic)
+    private final Map<String, User> userDatabase;
 
-    // Constructor initializes the user database
+    /**
+     * Constructor initializes the in-memory user database.
+     */
     public UserService() {
         userDatabase = new HashMap<>();
-        initializeDummyUsers(); // Pre-load some sample data for testing
+        initializeDummyUsers(); // Add sample users
     }
 
     /**
-     * Initializes the user database with dummy data.
+     * Adds dummy users for testing purposes.
      */
     private void initializeDummyUsers() {
-        userDatabase.put(1, new User(1, "raim", "raim@example.com", "09123456789"));
-        userDatabase.put(2, new User(2, "alex", "alex@example.com", "09987654321"));
+        userDatabase.put("testuser", new User("testuser", "password123", "Test User", "test@example.com", "Metro Manila"));
     }
 
     /**
-     * Authenticates a user by username.
+     * Registers a new user.
      *
-     * @param username the username provided by the user
-     * @return the User object if found, null otherwise
+     * @param username The desired username.
+     * @param password The plain-text password.
+     * @param fullName The user's full name.
+     * @param email    The user's email address.
+     * @param location The user's location.
+     * @return True if registration is successful, false if the username already exists.
      */
-    public User authenticateUser(String username) {
-        for (User user : userDatabase.values()) {
-            if (user.getUsername().equalsIgnoreCase(username)) {
-                return user;
-            }
+    public boolean register(String username, String password, String fullName, String email, String location) {
+        if (userDatabase.containsKey(username)) {
+            return false; // Username already exists
+        }
+        String hashedPassword = HashingUtils.hashPassword(password);
+        userDatabase.put(username, new User(username, hashedPassword, fullName, email, location));
+        return true;
+    }
+
+    /**
+     * Logs in an existing user.
+     *
+     * @param username The username.
+     * @param password The plain-text password.
+     * @return The logged-in User object or null if login fails.
+     */
+    public User login(String username, String password) {
+        User user = userDatabase.get(username);
+        if (user != null && HashingUtils.comparePassword(password, user.getPassword())) {
+            return user;
         }
         return null;
     }
 
     /**
-     * Updates a user's contact information.
-     *
-     * @param userId       the ID of the user
-     * @param newContact   the new contact number
-     * @param newEmail     the new email address
-     * @return true if the update was successful, false otherwise
-     */
-    public boolean updateUserDetails(int userId, String newContact, String newEmail) {
-        User user = userDatabase.get(userId);
-        if (user != null) {
-            user.setContactNumber(newContact);
-            user.setEmail(newEmail);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Retrieves a user by ID.
-     *
-     * @param userId the ID of the user to retrieve
-     * @return the User object if found, null otherwise
-     */
-    public User getUserById(int userId) {
-        return userDatabase.get(userId);
-    }
-
-    /**
-     * Displays all users for debugging or administrative purposes.
+     * Displays all registered users (for debugging purposes).
      */
     public void displayAllUsers() {
         for (User user : userDatabase.values()) {
-            user.displayUserDetails();
-            System.out.println("------");
+            System.out.println(user);
         }
     }
 }
