@@ -1,23 +1,23 @@
 package models;
 
 /**
- * Represents an item in the emergency inventory.
- * Demonstrates encapsulation and integrates with disaster-specific inventory management.
+ * Represents an item in the user's emergency inventory.
  */
 public class InventoryItem {
 
-    // Encapsulated fields
     private int itemId; // Unique identifier for the item
     private String itemName; // Name of the item
     private String category; // Example: "Food", "Medicine", "Tools"
     private boolean essential; // Indicates if the item is essential for a specific disaster
+    private int quantity; // Quantity of the item the user has
 
     // Constructor
-    public InventoryItem(int itemId, String itemName, String category, boolean essential) {
+    public InventoryItem(int itemId, String itemName, String category, boolean essential, int quantity) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.category = category;
         this.essential = essential;
+        this.quantity = quantity;
     }
 
     // Getters and setters
@@ -53,6 +53,14 @@ public class InventoryItem {
         this.essential = essential;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     /**
      * Displays the details of the inventory item.
      */
@@ -61,17 +69,6 @@ public class InventoryItem {
         System.out.println("Item Name: " + itemName);
         System.out.println("Category: " + category);
         System.out.println("Essential: " + (essential ? "Yes" : "No"));
-    }
-
-    /**
-     * Determines if the item is suitable for a specific disaster type.
-     * Example of future polymorphism or logic extension.
-     *
-     * @param disasterType The type of disaster to check against.
-     * @return true if the item is suitable, false otherwise.
-     */
-    public boolean isSuitableForDisaster(String disasterType) {
-        // Logic can be expanded to check disaster-specific suitability
-        return essential; // Placeholder logic
+        System.out.println("Quantity: " + quantity);
     }
 }

@@ -1,74 +1,51 @@
 package services;
 
 import models.User;
-import utils.HashingUtils;
+import java.sql.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Service class to handle user-related operations like registration and login.
- */
 public class UserService {
 
-    // Encapsulated user database simulation (can be replaced by real DB logic)
-    private final Map<String, User> userDatabase;
+    private Connection connection;
 
-    /**
-     * Constructor initializes the in-memory user database.
-     */
-    public UserService() {
-        userDatabase = new HashMap<>();
-        initializeDummyUsers(); // Add sample users
+    public UserService(Connection connection) {
+        this.connection = connection;
     }
 
-    /**
-     * Adds dummy users for testing purposes.
-     */
-    private void initializeDummyUsers() {
-        userDatabase.put("testuser", new User("testuser", "password123", "Test User", "test@example.com", "Metro Manila"));
-    }
+    // Method to create a new user in the database
+    public boolean createUser(String username, String passwordHash, String email, String contactNumber) {
+        String sql = "INSERT INTO Users (username, password_hash, email, contact_number) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            statement.setString(2, passwordHash);
+            statement.setString(3, email);
+            statement.setString(4, contactNumber);
 
-    /**
-     * Registers a new user.
-     *
-     * @param username The desired username.
-     * @param password The plain-text password.
-     * @param fullName The user's full name.
-     * @param email    The user's email address.
-     * @param location The user's location.
-     * @return True if registration is successful, false if the username already exists.
-     */
-    public boolean register(String username, String password, String fullName, String email, String location) {
-        if (userDatabase.containsKey(username)) {
-            return false; // Username already exists
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.err.println("Error creating user: " + e.getMessage());
+            return false;
         }
-        String hashedPassword = HashingUtils.hashPassword(password);
-        userDatabase.put(username, new User(username, hashedPassword, fullName, email, location));
-        return true;
     }
 
-    /**
-     * Logs in an existing user.
-     *
-     * @param username The username.
-     * @param password The plain-text password.
-     * @return The logged-in User object or null if login fails.
-     */
-    public User login(String username, String password) {
-        User user = userDatabase.get(username);
-        if (user != null && HashingUtils.comparePassword(password, user.getPassword())) {
-            return user;
-        }
-        return null;
-    }
+    // Method to retrieve a user by username
+    public User getUserByUsername(String username) {
+        String sql = "SELECT * FROM Users WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
 
-    /**
-     * Displays all registered users (for debugging purposes).
-     */
-    public void displayAllUsers() {
-        for (User user : userDatabase.values()) {
-            System.out.println(user);
+            if (resultSet.next()) {
+                int userId = resultSet.getInt("user_id");
+                String email = resultSet.getString("email");
+                String contactNumber = resultSet.getString("contact_number");
+                String passwordHash = resultSet.getString("password_hash");
+
+                return new User(userId, username, email, contactNumber, passwordHash);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving user: " + e.getMessage());
         }
+        return null;  // Return null if user not found
     }
 }
