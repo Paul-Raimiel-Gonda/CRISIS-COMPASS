@@ -1,58 +1,43 @@
 package disasters;
 
+import services.DisasterTipService;
 import java.util.List;
 
 /**
- * Abstract base class representing common properties and behaviors for all disasters.
+ * Abstract class representing a generic disaster.
  */
 public abstract class Disaster {
+    private final String name;
+    private final String description;
+    private final DisasterTipService disasterTipService;
 
-    // Encapsulated fields shared by all disasters
-    protected String name; // Name of the disaster (e.g., "Typhoon")
-    protected String description; // Brief description of the disaster
-
-    /**
-     * Constructor for Disaster.
-     *
-     * @param name        The name of the disaster.
-     * @param description A brief description of the disaster.
-     */
-    protected Disaster(String name, String description) {
+    public Disaster(String name, String description) {
         this.name = name;
         this.description = description;
+        this.disasterTipService = new DisasterTipService();
     }
 
-    // Getter for the disaster name
     public String getName() {
         return name;
     }
 
-    // Getter for the disaster description
     public String getDescription() {
         return description;
     }
 
     /**
-     * Abstract method to retrieve essential items for this type of disaster.
-     * Each derived class must implement this method.
+     * Fetch tips for a specific category using the disaster's type.
      *
-     * @return A list of essential items.
+     * @param category The tip category (BEFORE, DURING, AFTER, EMERGENCY).
      */
-    public abstract List<String> getEssentialItems();
+    public void fetchTipsByCategory(String category) {
+        System.out.println("\nTips for " + getName() + " (" + category + "):");
+        List<String> tips = disasterTipService.getTipsByCategory(getName(), category);
 
-    /**
-     * Abstract method to retrieve disaster-specific tips.
-     * Each derived class must implement this method.
-     *
-     * @return A list of general tips for this disaster.
-     */
-    public abstract List<String> getGeneralTips();
-
-    /**
-     * Displays disaster details, showcasing polymorphism for different disaster types.
-     */
-    public void displayDetails() {
-        System.out.println("Disaster: " + name);
-        System.out.println("Description: " + description);
+        if (tips.isEmpty()) {
+            System.out.println("No tips available for this category.");
+        } else {
+            tips.forEach(System.out::println);
+        }
     }
 }

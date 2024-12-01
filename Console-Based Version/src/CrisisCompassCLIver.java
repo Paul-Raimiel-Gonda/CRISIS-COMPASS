@@ -7,14 +7,14 @@ public class CrisisCompassCLIver {
 
     public static void main(String[] args) {
         // Display the user menu to allow login or registration
-        UserUI.showUserMenu();
+        int currentUserId = UserUI.showUserMenu(); // Assume this method now returns the logged-in user ID
 
         boolean running = true;
         Scanner scanner = new Scanner(System.in); // Declare a local scanner instance
 
         while (running) {
-            // Show the main menu after login/registration
-            MainMenu.showMainMenu();
+            // Show the main menu and pass the currentUserId
+            MainMenu.showMainMenu(currentUserId);
 
             System.out.print("\nDo you want to exit the application? (yes/no): ");
             String exitChoice = scanner.nextLine().trim().toLowerCase();

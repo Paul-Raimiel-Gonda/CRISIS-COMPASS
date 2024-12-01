@@ -3,72 +3,78 @@ package services;
 import database.DatabaseConnection;
 import models.DisasterTip;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Service for managing disaster tips.
+ * Service layer to fetch disaster tips.
  */
 public class DisasterTipService {
 
-    private final Connection connection;
-
-    public DisasterTipService() {
-        Connection conn = null;
-        try {
-            conn = DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException e) {
-            System.err.println("Error while getting connection in DisasterTipService: " + e.getMessage());
-        }
-        this.connection = conn;
-    }
-
     /**
-     * Fetches all tips for a specific disaster type.
+     * Fetch tips by disaster type and category from the database.
      *
-     * @param disasterType The type of disaster.
-     * @return List of disaster tips.
-     * @throws SQLException If a database error occurs.
+     * @param disasterType The type of disaster (e.g., "Flood", "Earthquake").
+     * @param category     The tip category (e.g., "Preparation", "During", "After", "Emergency").
+     * @return List of tips as strings.
      */
-    public List<DisasterTip> getTipsByDisasterType(String disasterType) {
-        String query = "SELECT * FROM DisasterTips WHERE disasterType = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, disasterType);
-            ResultSet rs = stmt.executeQuery();
-            List<DisasterTip> tips = new ArrayList<>();
-            while (rs.next()) {
-                DisasterTip tip = new DisasterTip(
-                        rs.getInt("id"),
-                        rs.getString("disasterType"),
-                        DisasterTip.TipCategory.valueOf(rs.getString("category").toUpperCase()),
-                        rs.getString("tip")
-                );
-                tips.add(tip);
+    public List<String> getTipsByCategory(String disasterType, String category) {
+        List<String> tips = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection()) {
+            String query = "SELECT tip_text FROM DisasterTips WHERE disaster_type = ? AND category = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, disasterType);
+                stmt.setString(2, category);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        tips.add(rs.getString("tip_text"));
+                    }
+                }
             }
-            return tips;
-        } catch (SQLException e) {
-            System.err.println("Error fetching tips for disaster type: " + disasterType);
+        } catch (Exception e) {
+            System.err.println("Error fetching tips: " + e.getMessage());
             e.printStackTrace();
-            return new ArrayList<>();
         }
+
+        return tips;
     }
 
     /**
-     * Adds a new disaster tip to the database.
+     * Fetch all tips related to a specific disaster type.
      *
-     * @param tip The DisasterTip object.
-     * @throws SQLException If a database error occurs.
+     * @param disasterType The type of disaster (e.g., "Flood", "Earthquake").
+     * @return List of DisasterTip objects containing all tips for the disaster.
      */
-    public void addDisasterTip(DisasterTip tip) {
-        String query = "INSERT INTO DisasterTips (disasterType, category, tip) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, tip.getDisasterType());
-            stmt.setString(2, tip.getCategory().toString());
-            stmt.setString(3, tip.getTip());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error adding disaster tip: " + e.getMessage());
+    public List<DisasterTip> getAllTipsByDisasterType(String disasterType) {
+        List<DisasterTip> tips = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection()) {
+            String query = "SELECT tip_id, disaster_type, category, tip_text FROM DisasterTips WHERE disaster_type = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, disasterType);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        DisasterTip tip = new DisasterTip(
+                                rs.getInt("tip_id"),
+                                rs.getString("disaster_type"),
+                                rs.getString("category"),
+                                rs.getString("tip_text")
+                        );
+                        tips.add(tip);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching tips: " + e.getMessage());
+            e.printStackTrace();
         }
+
+        return tips;
     }
 }

@@ -1,42 +1,82 @@
 package ui;
 
+import database.DatabaseConnection;
+import models.User;
+import services.UserService;
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserUI {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final UserService userService;
+
+    static {
+        try {
+            userService = new UserService(DatabaseConnection.getInstance().getConnection());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // Method for user registration
     public static void registerUser() {
         System.out.println("Please enter your details to register:");
+
         System.out.print("Username: ");
         String username = scanner.nextLine();
 
         System.out.print("Password: ");
         String password = scanner.nextLine();
 
-        // Add actual registration logic here (e.g., hash password, save to database)
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
 
-        System.out.println("Registration successful!");
+        System.out.print("Contact Number: ");
+        String contactNumber = scanner.nextLine();
+
+        // Hash the password using BCrypt
+        String passwordHash = hashPassword(password);
+
+        if (userService.createUser(username, passwordHash, email, contactNumber)) {
+            System.out.println("Registration successful! You can now log in.");
+        } else {
+            System.out.println("Registration failed. Please try again.");
+        }
     }
 
     // Method for user login
-    public static void loginUser() {
+    public static int loginUser() {
         System.out.println("Login to your account:");
+
         System.out.print("Username: ");
         String username = scanner.nextLine();
 
         System.out.print("Password: ");
         String password = scanner.nextLine();
 
-        // Add actual login logic here (e.g., verify credentials)
+        // Fetch user from database
+        User user = userService.getUserByUsername(username);
 
-        System.out.println("Login successful!");
-        MainMenu.showMainMenu(); // Navigate to the main menu after login
+        if (user == null) {
+            System.out.println("Invalid username or password. Please try again.");
+            return -1; // Indicates login failure
+        } else {
+            // Verify the entered password against the stored hashed password
+            if (checkPassword(password, user.getPasswordHash())) {
+                System.out.println("Login successful! Welcome, " + user.getUsername() + ".");
+                return user.getUserId(); // Return the user's ID after successful login
+            } else {
+                System.out.println("Invalid username or password. Please try again.");
+                return -1; // Indicates login failure
+            }
+        }
     }
 
     // Method to display the user registration or login menu
-    public static void showUserMenu() {
+    public static int showUserMenu() {
         while (true) {
             System.out.println("\nWelcome to Crisis Compass!");
             System.out.println("1. Register");
@@ -52,7 +92,10 @@ public class UserUI {
                     registerUser();
                     break;
                 case 2:
-                    loginUser();
+                    int userId = loginUser(); // Attempt login
+                    if (userId != -1) {
+                        return userId; // Return logged-in user's ID
+                    }
                     break;
                 case 3:
                     System.out.println("Thank you for using Crisis Compass. Goodbye!");
@@ -61,5 +104,15 @@ public class UserUI {
                     System.out.println("Invalid option. Please try again.");
             }
         }
+    }
+
+    // Utility method to hash passwords using BCrypt
+    private static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    // Utility method to check if the entered password matches the hashed password
+    private static boolean checkPassword(String password, String storedHash) {
+        return BCrypt.checkpw(password, storedHash);
     }
 }

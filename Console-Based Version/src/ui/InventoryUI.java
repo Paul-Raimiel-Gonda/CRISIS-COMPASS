@@ -34,7 +34,7 @@ public class InventoryUI {
                     case 2 -> viewAllItems();
                     case 3 -> {
                         System.out.println("Returning to Main Menu...");
-                        return; // Exit the loop to return to MainMenu
+                        return; // Return to Main Menu without recursive calls
                     }
                     default -> System.out.println("Invalid choice. Please try again.");
                 }

@@ -1,48 +1,55 @@
 package models;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a help request in the system.
- * Includes details like the username, request description, status, and timestamp.
  */
 public class HelpRequest {
 
-    // Enum to represent the status of a help request
     public enum Status {
         PENDING, IN_PROGRESS, RESOLVED
     }
 
-    private final int requestId; // Unique identifier for the request
-    private final String username; // User who submitted the request
-    private final String description; // Description of the request
-    private Status status; // Current status of the request
-    private final LocalDateTime timestamp; // Time the request was created
+    private final int requestId;
+    private final int userId;
+    private String username; // Optional for display
+    private final String disasterType;
+    private String description;
+    private Status status;
 
-    /**
-     * Constructor for HelpRequest.
-     *
-     * @param requestId   The unique ID for the request.
-     * @param username    The username of the requester.
-     * @param description The description of the help request.
-     * @param status      The initial status of the request.
-     */
-    public HelpRequest(int requestId, String username, String description, Status status) {
+    // Constructor for displaying help requests
+    public HelpRequest(int requestId, String username, String disasterType, String description, Status status) {
         this.requestId = requestId;
+        this.userId = 0; // Placeholder
         this.username = username;
+        this.disasterType = disasterType;
         this.description = description;
         this.status = status;
-        this.timestamp = LocalDateTime.now();
     }
 
-    // Getters and setters for encapsulation
+    // Constructor for database use
+    public HelpRequest(int requestId, int userId, String disasterType, String description, Status status) {
+        this.requestId = requestId;
+        this.userId = userId;
+        this.disasterType = disasterType;
+        this.description = description;
+        this.status = status;
+    }
 
+    // Getters
     public int getRequestId() {
         return requestId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public String getDisasterType() {
+        return disasterType;
     }
 
     public String getDescription() {
@@ -53,22 +60,12 @@ public class HelpRequest {
         return status;
     }
 
+    // Setters (if necessary)
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Displays the details of the help request.
-     */
-    public void displayRequestDetails() {
-        System.out.println("Request ID: " + requestId);
-        System.out.println("Username: " + username);
-        System.out.println("Description: " + description);
-        System.out.println("Status: " + status);
-        System.out.println("Timestamp: " + timestamp);
     }
 }

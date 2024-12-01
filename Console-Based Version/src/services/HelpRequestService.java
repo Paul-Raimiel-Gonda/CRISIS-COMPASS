@@ -7,66 +7,29 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Service for managing help requests.
- */
 public class HelpRequestService {
 
     private final Connection connection;
 
     public HelpRequestService() {
-        Connection conn = null;
         try {
-            conn = DatabaseConnection.getInstance().getConnection();
+            connection = DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
-            System.err.println("Error while getting connection in HelpRequestService: " + e.getMessage());
-        }
-        this.connection = conn;
-    }
-
-    /**
-     * Fetches all help requests for a user.
-     *
-     * @param username The username of the requester.
-     * @return List of help requests.
-     * @throws SQLException If a database error occurs.
-     */
-    public List<HelpRequest> getHelpRequestsByUsername(String username) {
-        String query = "SELECT * FROM HelpRequests WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            List<HelpRequest> requests = new ArrayList<>();
-            while (rs.next()) {
-                HelpRequest request = new HelpRequest(
-                        rs.getInt("requestId"),
-                        rs.getString("username"),
-                        rs.getString("description"),
-                        HelpRequest.Status.valueOf(rs.getString("status").toUpperCase())
-                );
-                requests.add(request);
-            }
-            return requests;
-        } catch (SQLException e) {
-            System.err.println("Error fetching help requests for user: " + username);
-            e.printStackTrace();
-            return new ArrayList<>();
+            throw new RuntimeException("Error initializing database connection", e);
         }
     }
 
     /**
      * Creates a new help request.
-     *
-     * @param request The HelpRequest object.
-     * @throws SQLException If a database error occurs.
      */
     public void createHelpRequest(HelpRequest request) {
-        String query = "INSERT INTO HelpRequests (username, description, status, timestamp) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO HelpRequests (user_id, disaster_type, request_details, status) " +
+                "VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, request.getUsername());
-            stmt.setString(2, request.getDescription());
-            stmt.setString(3, request.getStatus().toString());
-            stmt.setTimestamp(4, Timestamp.valueOf(request.getTimestamp()));
+            stmt.setInt(1, request.getUserId());
+            stmt.setString(2, request.getDisasterType());
+            stmt.setString(3, request.getDescription());
+            stmt.setString(4, request.getStatus().name());
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error creating help request: " + e.getMessage());
@@ -74,20 +37,85 @@ public class HelpRequestService {
     }
 
     /**
-     * Updates the status of a help request.
-     *
-     * @param requestId The ID of the help request.
-     * @param status    The new status.
-     * @throws SQLException If a database error occurs.
+     * Fetches ongoing help requests.
      */
-    public void updateHelpRequestStatus(int requestId, HelpRequest.Status status) {
-        String query = "UPDATE HelpRequests SET status = ? WHERE requestId = ?";
+    public List<HelpRequest> getOngoingHelpRequests() {
+        List<HelpRequest> requests = new ArrayList<>();
+        String query = "SELECT hr.request_id, u.username, hr.disaster_type, hr.request_details, hr.status " +
+                "FROM HelpRequests hr " +
+                "JOIN Users u ON hr.user_id = u.user_id " +
+                "WHERE hr.status != 'Resolved'";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                requests.add(new HelpRequest(
+                        rs.getInt("request_id"),
+                        rs.getString("username"),
+                        rs.getString("disaster_type"),
+                        rs.getString("request_details"),
+                        HelpRequest.Status.valueOf(rs.getString("status").toUpperCase())
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching ongoing help requests: " + e.getMessage());
+        }
+        return requests;
+    }
+
+    /**
+     * Fetches all help requests for a specific user.
+     */
+    public List<HelpRequest> getHelpRequestsByUserId(int userId) {
+        List<HelpRequest> requests = new ArrayList<>();
+        String query = "SELECT * FROM HelpRequests WHERE user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, status.toString());
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                requests.add(new HelpRequest(
+                        rs.getInt("request_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("disaster_type"),
+                        rs.getString("request_details"),
+                        HelpRequest.Status.valueOf(rs.getString("status").toUpperCase())
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching help requests for user ID: " + e.getMessage());
+        }
+        return requests;
+    }
+
+    /**
+     * Updates a help request's details.
+     */
+    public boolean updateHelpRequestDetails(int requestId, String newDetails, int userId) {
+        String query = "UPDATE HelpRequests SET request_details = ? WHERE request_id = ? AND user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, newDetails);
             stmt.setInt(2, requestId);
-            stmt.executeUpdate();
+            stmt.setInt(3, userId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating help request details: " + e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * Updates a help request's status.
+     */
+    public boolean updateHelpRequestStatus(int requestId, HelpRequest.Status status, int userId) {
+        String query = "UPDATE HelpRequests SET status = ? WHERE request_id = ? AND user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status.name());
+            stmt.setInt(2, requestId);
+            stmt.setInt(3, userId);
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error updating help request status: " + e.getMessage());
         }
+        return false;
     }
 }
