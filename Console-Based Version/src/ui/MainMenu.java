@@ -40,7 +40,8 @@ public class MainMenu {
                     helpRequestUI.displayHelpRequestMenu(currentUserId); // Pass currentUserId
                     break;
                 case 4:
-                    System.out.println("Disaster tracking functionality is not yet available.");
+                    TrackDisasterUI trackDisasterUI = new TrackDisasterUI();
+                    trackDisasterUI.displayDisasterTrackingMenu();
                     break;
                 case 5:
                     System.out.println("Logging out...");

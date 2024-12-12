@@ -40,4 +40,14 @@ public abstract class Disaster {
             tips.forEach(System.out::println);
         }
     }
+
+    /**
+     * Abstract method to return the government tracking link for this disaster type.
+     */
+    public abstract String getTrackingLink();
+
+    /**
+     * Abstract method to display tracking tips for the disaster.
+     */
+    public abstract void displayTrackingTips();
 }

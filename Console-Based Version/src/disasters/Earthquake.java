@@ -7,4 +7,17 @@ public class Earthquake extends Disaster {
     public Earthquake() {
         super("Earthquake", "A sudden and violent shaking of the ground, often causing great destruction.");
     }
+
+    @Override
+    public String getTrackingLink() {
+        return "https://www.phivolcs.dost.gov.ph/index.php/earthquake/earthquake-information3";
+    }
+
+    @Override
+    public void displayTrackingTips() {
+        System.out.println("Tips for tracking earthquakes:");
+        System.out.println("1. Visit the PHIVOLCS website for earthquake bulletins and maps.");
+        System.out.println("2. Use mobile apps for real-time earthquake alerts.");
+        System.out.println("3. Stay informed about earthquake-prone zones in your area.");
+    }
 }
