@@ -4,16 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Manages the connection to the database.
- * Implements the Singleton pattern to ensure a single connection instance.
- */
 public class DatabaseConnection {
 
     // Encapsulating database details
     private static final String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/crisiscompass";
     private static final String DATABASE_USER = "raim";
-    private static final String DATABASE_PASSWORD = "Dagon086"; // Replace with actual password
+    private static final String DATABASE_PASSWORD = "Dagon086";
 
     // Singleton instance of the DatabaseConnection
     private static DatabaseConnection instance;
@@ -32,13 +28,6 @@ public class DatabaseConnection {
         }
     }
 
-    /**
-     * Provides the singleton instance of the DatabaseConnection.
-     * Ensures thread safety.
-     *
-     * @return the singleton instance
-     * @throws SQLException if a connection error occurs
-     */
     public static synchronized DatabaseConnection getInstance() throws SQLException {
         if (instance == null || instance.connection == null || instance.connection.isClosed()) {
             instance = new DatabaseConnection();
@@ -46,18 +35,13 @@ public class DatabaseConnection {
         return instance;
     }
 
-    /**
-     * Returns the current database connection.
-     *
-     * @return the database connection instance
-     */
+
+     // Returns the current database connection.
     public Connection getConnection() {
         return connection;
     }
 
-    /**
-     * Closes the database connection if it is open.
-     */
+    // Closes the database connection if it is open.
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {

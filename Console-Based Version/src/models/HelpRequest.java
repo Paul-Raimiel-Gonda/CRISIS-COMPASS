@@ -1,8 +1,6 @@
 package models;
 
-/**
- * Represents a help request in the system.
- */
+//CLASS FOR HELP REQUESTS
 public class HelpRequest {
 
     public enum Status {

@@ -1,8 +1,6 @@
 package models;
 
-/**
- * Represents an item in the user's emergency inventory.
- */
+//CLASS FOR INVENTORY
 public class InventoryItem {
 
     private int itemId; // Unique identifier for the item
@@ -61,9 +59,6 @@ public class InventoryItem {
         this.quantity = quantity;
     }
 
-    /**
-     * Displays the details of the inventory item.
-     */
     public void displayItemDetails() {
         System.out.println("Item ID: " + itemId);
         System.out.println("Item Name: " + itemName);

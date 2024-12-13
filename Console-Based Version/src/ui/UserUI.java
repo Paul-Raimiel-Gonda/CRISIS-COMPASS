@@ -6,7 +6,10 @@ import services.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import utils.ExceptionHandlingUtil;
 
 public class UserUI {
 
@@ -21,9 +24,9 @@ public class UserUI {
         }
     }
 
-    // Method for user registration
+    // Method for user registration using service package
     public static void registerUser() {
-        System.out.println("Please enter your details to register:");
+        System.out.println("\nPlease enter your details to register:\n");
 
         System.out.print("Username: ");
         String username = scanner.nextLine();
@@ -47,9 +50,9 @@ public class UserUI {
         }
     }
 
-    // Method for user login
+    // Method for user login using service package
     public static int loginUser() {
-        System.out.println("Login to your account:");
+        System.out.println("\nLogin to your account:\n");
 
         System.out.print("Username: ");
         String username = scanner.nextLine();
@@ -78,30 +81,43 @@ public class UserUI {
     // Method to display the user registration or login menu
     public static int showUserMenu() {
         while (true) {
-            System.out.println("\nWelcome to Crisis Compass!");
+            System.out.println("\n\n" +
+                    " ██████ ██████  ██ ███████ ██ ███████      ██████  ██████  ███    ███ ██████   █████  ███████ ███████ \n" +
+                    "██      ██   ██ ██ ██      ██ ██          ██      ██    ██ ████  ████ ██   ██ ██   ██ ██      ██      \n" +
+                    "██      ██████  ██ ███████ ██ ███████     ██      ██    ██ ██ ████ ██ ██████  ███████ ███████ ███████ \n" +
+                    "██      ██   ██ ██      ██ ██      ██     ██      ██    ██ ██  ██  ██ ██      ██   ██      ██      ██ \n" +
+                    " ██████ ██   ██ ██ ███████ ██ ███████      ██████  ██████  ██      ██ ██      ██   ██ ███████ ███████ \n" +
+                    "                                                                                                      \n" +
+                    "------------------------------- A DISASTER PREPARATION ASSISTANT -------------------------------------\n");
             System.out.println("1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
-            System.out.print("Please choose an option: ");
+            System.out.print("\nPlease choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
 
-            switch (choice) {
-                case 1:
-                    registerUser();
-                    break;
-                case 2:
-                    int userId = loginUser(); // Attempt login
-                    if (userId != -1) {
-                        return userId; // Return logged-in user's ID
-                    }
-                    break;
-                case 3:
-                    System.out.println("Thank you for using Crisis Compass. Goodbye!");
-                    System.exit(0); // Terminate the program immediately
-                default:
-                    System.out.println("Invalid option. Please try again.");
+                switch (choice) {
+                    case 1:
+                        registerUser();
+                        break;
+                    case 2:
+                        int userId = loginUser(); // Attempt login
+                        if (userId != -1) {
+                            return userId; // Return logged-in user's ID
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Thank you for using Crisis Compass. Goodbye!");
+                        System.exit(0); // Terminate the program immediately
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                ExceptionHandlingUtil.handleException(e); // Log the exception using your utility
+                System.out.println("Invalid input! Please enter a number corresponding to the menu options.");
+                scanner.nextLine(); // Clear the invalid input
             }
         }
     }

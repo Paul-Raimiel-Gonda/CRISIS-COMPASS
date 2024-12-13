@@ -3,17 +3,8 @@ package utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Utility class for validating user inputs.
- */
+//FOR PASSWORD HASHING
 public class InputValidationUtil {
-
-    /**
-     * Validates an email address using regex.
-     *
-     * @param email The email to validate.
-     * @return true if the email is valid, otherwise false.
-     */
     public static boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
@@ -21,12 +12,7 @@ public class InputValidationUtil {
         return matcher.matches();
     }
 
-    /**
-     * Validates a phone number (e.g., for 10 digits).
-     *
-     * @param phoneNumber The phone number to validate.
-     * @return true if the phone number is valid, otherwise false.
-     */
+   //Validates a phone number (e.g., for 10 digits).
     public static boolean isValidPhoneNumber(String phoneNumber) {
         String phoneRegex = "^[0-9]{10}$";
         Pattern pattern = Pattern.compile(phoneRegex);

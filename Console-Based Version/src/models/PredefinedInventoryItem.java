@@ -2,9 +2,7 @@ package models;
 
 import java.util.List;
 
-/**
- * Represents a predefined inventory item.
- */
+//CLASS FOR PREDEFINED ITEMS
 public class PredefinedInventoryItem {
     private int itemId;
     private String itemName;
@@ -83,9 +81,6 @@ public class PredefinedInventoryItem {
                 "\n";
     }
 
-    /**
-     * Displays the details of the inventory item.
-     */
     public void displayItemDetails() {
         System.out.println(this.toString());
     }

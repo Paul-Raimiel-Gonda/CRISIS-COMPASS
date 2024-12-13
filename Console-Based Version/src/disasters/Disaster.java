@@ -25,13 +25,8 @@ public abstract class Disaster {
         return description;
     }
 
-    /**
-     * Fetch tips for a specific category using the disaster's type.
-     *
-     * @param category The tip category (BEFORE, DURING, AFTER, EMERGENCY).
-     */
     public void fetchTipsByCategory(String category) {
-        System.out.println("\nTips for " + getName() + " (" + category + "):");
+        System.out.println("\nTips for " + getName() + " (" + category + "):\n");
         List<String> tips = disasterTipService.getTipsByCategory(getName(), category);
 
         if (tips.isEmpty()) {
@@ -41,13 +36,9 @@ public abstract class Disaster {
         }
     }
 
-    /**
-     * Abstract method to return the government tracking link for this disaster type.
-     */
+  //returns government aganecy links
     public abstract String getTrackingLink();
 
-    /**
-     * Abstract method to display tracking tips for the disaster.
-     */
+   //tracking tips
     public abstract void displayTrackingTips();
 }

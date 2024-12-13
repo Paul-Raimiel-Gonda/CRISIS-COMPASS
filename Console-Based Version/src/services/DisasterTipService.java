@@ -9,18 +9,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Service layer to fetch disaster tips.
- */
+//HANDLES ALL OPERATIONS FOR DISASTER TIPS
 public class DisasterTipService {
-
-    /**
-     * Fetch tips by disaster type and category from the database.
-     *
-     * @param disasterType The type of disaster (e.g., "Flood", "Earthquake").
-     * @param category     The tip category (e.g., "Preparation", "During", "After", "Emergency").
-     * @return List of tips as strings.
-     */
     public List<String> getTipsByCategory(String disasterType, String category) {
         List<String> tips = new ArrayList<>();
 
@@ -44,12 +34,6 @@ public class DisasterTipService {
         return tips;
     }
 
-    /**
-     * Fetch all tips related to a specific disaster type.
-     *
-     * @param disasterType The type of disaster (e.g., "Flood", "Earthquake").
-     * @return List of DisasterTip objects containing all tips for the disaster.
-     */
     public List<DisasterTip> getAllTipsByDisasterType(String disasterType) {
         List<DisasterTip> tips = new ArrayList<>();
 

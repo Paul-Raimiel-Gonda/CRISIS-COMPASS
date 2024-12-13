@@ -6,9 +6,6 @@ import models.HelpRequest;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Handles user interactions for help requests.
- */
 public class HelpRequestUI {
 
     private final HelpRequestService helpRequestService;
@@ -21,19 +18,28 @@ public class HelpRequestUI {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\nHelp Request Menu:");
+            System.out.println("\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣤⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⡀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⠿⠛⠉⠉⠉⠉⠉⠉⠛⠿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⣰⣿⣿⣿⡿⠋⠀⣀⣤⣶⣾⣿⣿⣷⣶⣤⣀⠀⠙⢿⣿⣿⣿⣆⠀⠀⠀            -----------------------------\n" +
+                    "⠀⠀⣰⣿⣿⣿⠋⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠙⣿⣿⣿⣆⠀⠀                 HELP REQUEST MENU\n" +
+                    "⠀⢰⣿⣿⣿⠃⠀⠀⣿⣿⣿⡟⠁⠀⠀⠀⠀⠈⢻⣿⣿⣿⠀⠀⠘⣿⣿⣿⡆⠀\n" +
+                    "⠀⣾⣿⣿⡇⠀⠀⠀⠈⠉⠉⠀⠀⠀⣀⣤⣶⣾⣿⣿⠿⠋⠀⠀⠀⢸⣿⣿⣷⠀               1. Add a Help Request\n" +
+                    "⠀⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⠟⠋⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀                2. View My Help Requests\n" +
+                    "⠀⢿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⡿⠀                3. Back to Main Menu\n" +
+                    "⠀⠸⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠘⠛⠛⠃⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⠇⠀             ------------------------------\n" +
+                    "⠀⠀⠹⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⣰⣾⣷⣆⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⠏⠀⠀\n" +
+                    "⠀⠀⠀⠹⣿⣿⣿⣷⣄⠀⠀⠀⠀⠹⢿⡿⠏⠀⠀⠀⠀⣠⣾⣿⣿⣿⠏⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣶⣤⣀⣀⣀⣀⣀⣀⣤⣶⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⠈⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠁⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠙⠛⠛⠛⠛⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 
             // Display ongoing help requests for all users
-            displayOngoingHelpRequests();
-
-            // Menu options
-            System.out.println("\n1. Add a Help Request");
-            System.out.println("2. View My Help Requests");
-            System.out.println("3. Back to Main Menu");
-            System.out.print("Enter your choice: ");
+            System.out.print("                                                       Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
+            scanner.nextLine();
+            displayOngoingHelpRequests();
             switch (choice) {
                 case 1 -> addHelpRequest(currentUserId);
                 case 2 -> viewOwnHelpRequests(currentUserId);
@@ -46,26 +52,31 @@ public class HelpRequestUI {
     }
 
     private void displayOngoingHelpRequests() {
-        System.out.println("\nOngoing Help Requests (excluding 'Resolved'):");
+        System.out.println("\n                                          ONGOING HELP REQUESTS");
+        System.out.println("\n-------------------------------------------------------------------------------------------------------------------");
         List<HelpRequest> requests = helpRequestService.getOngoingHelpRequests();
 
         if (requests.isEmpty()) {
             System.out.println("No ongoing help requests found.");
         } else {
             // Display a table with ongoing help requests
-            System.out.printf("%-10s %-15s %-20s %-30s %-10s%n",
+            System.out.printf("%-15s %-15s %-20s %-50s %-10s%n",
                     "Request ID", "User", "Disaster Type", "Request Details", "Status");
-            requests.forEach(request -> System.out.printf("%-10d %-15s %-20s %-30s %-10s%n",
+            requests.forEach(request -> System.out.printf("%-15d %-15s %-20s %-50s %-10s%n",
                     request.getRequestId(), request.getUsername(), request.getDisasterType(),
                     request.getDescription(), request.getStatus()));
         }
+        System.out.println("\n-------------------------------------------------------------------------------------------------------------------");
     }
 
     private void addHelpRequest(int currentUserId) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nAdd a Help Request:");
-        System.out.print("Enter the disaster type: ");
+        System.out.print("\nTYPHOON " + "            FLOOD\n" +
+                "EARTHQUAKE" + "          VOLCANIC ERUPTION\n" +
+                "DROUGHT\n\n " +
+                "ENTER DISASTER TYPE\n ");
         String disasterType = scanner.nextLine();
         System.out.print("Enter the request details: ");
         String requestDetails = scanner.nextLine();
@@ -84,18 +95,20 @@ public class HelpRequestUI {
             return;
         }
 
-        System.out.println("\nYour Help Requests:");
-        System.out.printf("%-10s %-20s %-30s %-10s%n",
+        System.out.println("\n                                           MY HELP REQUESTS");
+        System.out.println("\n-------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-10s %-20s %-50s %-10s%n",
                 "Request ID", "Disaster Type", "Request Details", "Status");
-        requests.forEach(request -> System.out.printf("%-10d %-20s %-30s %-10s%n",
+        requests.forEach(request -> System.out.printf("%-10d %-20s %-50s %-10s%n",
                 request.getRequestId(), request.getDisasterType(), request.getDescription(), request.getStatus()));
+        System.out.println("\n-------------------------------------------------------------------------------------------------------------------");
 
         System.out.println("\n1. Edit a Request");
         System.out.println("2. Set a Request to Resolved");
         System.out.println("3. Back");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         switch (choice) {
             case 1 -> editHelpRequest(currentUserId);
@@ -111,7 +124,7 @@ public class HelpRequestUI {
 
         System.out.print("Enter the Request ID to edit: ");
         int requestId = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         System.out.print("Enter the new request details: ");
         String newDetails = scanner.nextLine();

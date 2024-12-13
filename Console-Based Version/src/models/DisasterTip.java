@@ -1,5 +1,6 @@
 package models;
 
+//CLASS FOR DISASTER TIPS
 public class DisasterTip {
     private int id;
     private String disasterType;

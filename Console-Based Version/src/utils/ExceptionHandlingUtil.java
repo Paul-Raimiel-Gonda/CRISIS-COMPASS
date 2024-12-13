@@ -14,6 +14,11 @@ public class ExceptionHandlingUtil {
         System.err.println("Exception: " + e.getMessage());
         e.printStackTrace();
     }
+    public static void clearScreen() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
 
     public static void handleNumberFormatException(NumberFormatException e) {
         System.err.println("Invalid number format: " + e.getMessage());

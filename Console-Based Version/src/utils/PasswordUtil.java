@@ -9,12 +9,10 @@ import java.util.Base64;
  */
 public class PasswordUtil {
 
-    /**
-     * Hashes a password using SHA-256 algorithm.
-     *
-     * @param password The password to hash.
-     * @return The hashed password in Base64 encoding.
-     */
+
+     //Hashes a password using SHA-256 algorithm.
+     //param password The password to hash.
+     //return The hashed password in Base64 encoding.
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -26,13 +24,9 @@ public class PasswordUtil {
         }
     }
 
-    /**
-     * Verifies if a given password matches the hashed password.
-     *
-     * @param password The password to check.
-     * @param hashedPassword The stored hashed password.
-     * @return true if passwords match, otherwise false.
-     */
+     // @param password The password to check.
+     // @param hashedPassword The stored hashed password.
+     // @return true if passwords match, otherwise false.
     public static boolean verifyPassword(String password, String hashedPassword) {
         String hashedInputPassword = hashPassword(password);
         return hashedInputPassword != null && hashedInputPassword.equals(hashedPassword);

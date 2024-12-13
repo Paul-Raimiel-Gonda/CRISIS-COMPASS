@@ -11,14 +11,24 @@ public class TrackDisasterUI {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-                System.out.println("\nDisaster Tracking Menu:");
-                System.out.println("1. Drought");
-                System.out.println("2. Earthquake");
-                System.out.println("3. Flood");
-                System.out.println("4. Typhoon");
-                System.out.println("5. Volcanic Eruption");
-                System.out.println("6. Back to Main Menu");
-                System.out.print("Choose a disaster to track: ");
+                System.out.println("\n" +
+                        "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n" +
+                        "⣿⡿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⢿⣿\n" +
+                        "⣿⡇⠀⢠⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⠀⠀⠀⠀⠀⠀⠀⢸⣿          ------------------------------\n" +
+                        "⣿⡇⠀⢸⠛⠿⠿⠿⠄⠀⠸⣿⣿⣿⣿⣿⣧⣤⣤⣤⣿⠀⠀⠀⠀⠀⠀⠀⢸⣿              DISASTER TRACKING MENU\n" +
+                        "⣿⡇⠀⢸⣶⣶⣶⣦⣤⠀⠀⢿⣿⣿⣿⣿⣧⣤⣤⣤⣿⠀⠀⠀⠀⠀⠀⠀⢸⣿\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣧⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢰⡶⠶⠶⣶⠀⢸⣿            1. Drought\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⡆⢀⣿⣿⣿⣿⠿⠿⠟⠛⣿⠀⠘⠛⠛⠛⠛⠀⢸⣿            2. Earthquake\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⣿⡞⢻⣇⣤⣤⣤⣶⣶⣿⣿⠀⢸⡟⠛⠛⣿⠀⢸⣿            3. Flood\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⠟⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⠀⠘⠛⠛⠛⠛⠀⢸⣿            4. Typhoon\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣋⣤⣤⣄⣀⢻⣿⣿⣿⣿⣿⣿⠀⢀⣴⠖⠲⣦⠀⢸⣿            5. Volcanic Eruption\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⡟⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⠀⠸⣧⡀⢀⣿⠀⢸⣿            6. Back to Main Menu\n" +
+                        "⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠉⠛⠛⠁⠀⢸⣿          ------------------------------\n" +
+                        "⣿⡇⠀⠘⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠀⠀⠀⠀⠀⠀⠀⢸⣿\n" +
+                        "⣿⣷⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣾⣿\n" +
+                        "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
+                System.out.println("\n:");
+                System.out.print("                                                Choose a disaster to track: ");
                 int choice = Integer.parseInt(scanner.nextLine());
 
                 Disaster disaster;
@@ -37,7 +47,7 @@ public class TrackDisasterUI {
                     }
                 }
 
-                System.out.println("\nTracking information for: " + disaster.getName());
+                System.out.println("\nTRACKING INFORMATION: " + disaster.getName());
                 System.out.println("Description: " + disaster.getDescription());
                 System.out.println("Tracking Link: " + disaster.getTrackingLink());
                 disaster.displayTrackingTips();

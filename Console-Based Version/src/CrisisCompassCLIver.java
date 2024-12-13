@@ -6,21 +6,19 @@ import java.util.Scanner;
 public class CrisisCompassCLIver {
 
     public static void main(String[] args) {
-        // Display the user menu to allow login or registration
-        int currentUserId = UserUI.showUserMenu(); // Assume this method now returns the logged-in user ID
+        int currentUserId = UserUI.showUserMenu();
 
         boolean running = true;
-        Scanner scanner = new Scanner(System.in); // Declare a local scanner instance
+        Scanner scanner = new Scanner(System.in);
 
         while (running) {
-            // Show the main menu and pass the currentUserId
             MainMenu.showMainMenu(currentUserId);
 
             System.out.print("\nDo you want to exit the application? (yes/no): ");
             String exitChoice = scanner.nextLine().trim().toLowerCase();
 
             if (exitChoice.equals("yes")) {
-                running = false; // Exit the loop and terminate the program
+                running = false;
                 System.out.println("Thank you for using Crisis Compass. Goodbye!");
             }
         }

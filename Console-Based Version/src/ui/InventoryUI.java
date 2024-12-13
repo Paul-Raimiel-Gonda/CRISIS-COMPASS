@@ -18,29 +18,41 @@ public class InventoryUI {
 
     public void displayInventoryMenu() {
         Scanner scanner = new Scanner(System.in);
-        while (true) { // Loop to allow returning to the main menu
-            System.out.println("\nDISASTER INVENTORY:\n");
-            System.out.println("1. Manage Inventory");
-            System.out.println("2. View All Items");
-            System.out.println("3. Back to Main Menu");
-            System.out.print("Enter your choice: ");
+        while (true) {
+            System.out.println("\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠉⠉⠉⠉⠉⠉⠉⠉⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⣾⠀⣿⣿⡿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⢿⣿⣿⠀⢷⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⢰⡏⠀⣿⣿⠀⣴⣶⣶⣶⣶⣶⣶⣶⣶⣦⠀⣿⣿⡀⢸⡆⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⢸⡇⠀⣿⣿⣆⠘⠻⠇⢠⣤⣤⡄⠸⠟⠋⣠⣿⣿⡇⢸⡇⠀⠀⠀⠀         --------------------\n" +
+                    "⠀⠀⠀⠀⢸⣇⠀⣿⣿⣿⣿⣶⣆⣈⣉⣉⣁⣰⣶⣿⣿⣿⣿⠃⢸⡇⠀⠀⠀⠀         DISASTER INVENTORY\n" +
+                    "⠀⠀⠀⠀⠈⣿⣀⣉⣉⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠉⣉⣉⣀⣿⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⢀⡴⠀⣉⣉⠉⠉⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠉⠉⠉⣉⣉⠀⢦⡀⠀          1. Manage Inventory⠀\n" +
+                    "⠀⠀⠈⣀⠀⣿⣿⠀⣿⣿⠀⠛⠛⠉⠉⠉⠉⠛⠛⠀⣿⣿⠀⣿⣿⠀⣀⠁⠀⠀         2. View All Items\n" +
+                    "⠀⠀⢸⡇⢀⣿⣿⠀⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⠀⣿⣿⡀⢸⡇⠀⠀         3. Back to Main Menu\n" +
+                    "⠀⠀⢸⡇⢸⣿⠀⣤⡤⢤⣄⠘⠻⠿⠿⠿⠿⠟⠃⣠⡤⢤⣤⠀⣿⡇⢸⡇⠀⠀        ----------------------\n" +
+                    "⠀⠀⢠⡄⢸⣿⠀⠛⠃⠘⠋⢸⣶⣶⣆⣰⣶⣶⡇⠙⠃⠘⠛⠀⣿⡇⢠⡄⠀⠀\n" +
+                    "⠀⠀⢠⡄⠸⣿⣿⠀⠷⠞⠀⠛⠛⠿⠿⠿⠿⠛⠛⠀⠳⠾⠀⣿⣿⠇⢠⡄⠀⠀\n" +
+                    "⠀⠀⠘⠗⠀⣿⣿⠀⣶⣶⠀⣿⣷⣶⣶⣶⣶⣾⣿⠀⣶⣶⠀⣿⣿⠀⠺⠃⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠉⠉⠀⠉⠉⠀⠉⠉⠉⠉⠉⠉⠉⠉⠀⠉⠉⠀⠉⠉⠀⠀⠀⠀⠀");
+            System.out.print("                                              Enter your choice: ");
 
             try {
                 int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1 -> manageInventoryForDisaster();
                     case 2 -> viewAllItems();
                     case 3 -> {
                         System.out.println("Returning to Main Menu...");
-                        return; // Return to Main Menu without recursive calls
+                        return;
                     }
                     default -> System.out.println("Invalid choice. Please try again.");
                 }
             } catch (Exception e) {
                 ExceptionHandlingUtil.handleException(e);
-                scanner.nextLine(); // Clear invalid input
+                scanner.nextLine();
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
             }
         }
@@ -48,7 +60,10 @@ public class InventoryUI {
 
     private void manageInventoryForDisaster() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter disaster type \n(Typhoon, Flood, Earthquake, Volcanic Eruption, Drought): ");
+        System.out.print("\nTYPHOON " + "            FLOOD\n" +
+                "EARTHQUAKE" + "          VOLCANIC ERUPTION\n" +
+                "DROUGHT\n\n " +
+                "ENTER DISASTER TYPE\n ");
         String disasterType = scanner.nextLine();
 
         List<PredefinedInventoryItem> allItems = inventoryService.getAllPredefinedItems();
@@ -60,6 +75,7 @@ public class InventoryUI {
         }
 
         System.out.println("\nAvailable Items:");
+        System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------");
         int count = 0;
         for (PredefinedInventoryItem item : allItems) {
             System.out.printf("%-30s", "(" + item.getItemName() + ")");
@@ -71,7 +87,7 @@ public class InventoryUI {
         if (count % 5 != 0) {
             System.out.println();
         }
-
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
         boolean addingItems = true;
         while (addingItems) {
             System.out.print("\nEnter the name of the item to add (or type 'done' to finish): ");

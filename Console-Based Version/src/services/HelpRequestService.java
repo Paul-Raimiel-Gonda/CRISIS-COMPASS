@@ -11,6 +11,7 @@ public class HelpRequestService {
 
     private final Connection connection;
 
+    //HANDLES ALL OPERATIONS FOR DISASTER REQUESTS
     public HelpRequestService() {
         try {
             connection = DatabaseConnection.getInstance().getConnection();
@@ -18,10 +19,6 @@ public class HelpRequestService {
             throw new RuntimeException("Error initializing database connection", e);
         }
     }
-
-    /**
-     * Creates a new help request.
-     */
     public void createHelpRequest(HelpRequest request) {
         String query = "INSERT INTO HelpRequests (user_id, disaster_type, request_details, status) " +
                 "VALUES (?, ?, ?, ?)";
