@@ -2,7 +2,7 @@
   <img src = "ReadmeResources/GAME.gif" width = "1920" height = "500" alt="LogoInsert"> 
 </p>
 
-# -------------CRISIS COMPASS - Disaster Preparation Assistant----------
+# CRISIS COMPASS - Disaster Preparation Assistant
 
 ## Table of Contents
 -  [1. Program Overview](#proj-over)
