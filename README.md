@@ -121,7 +121,7 @@ git clone https://github.com/Paul-Raimiel-Gonda/CRISIS-COMPASS.git
 2. Navigate to `src/main/java` and locate the `MainApp.java` file.
 3. Run the program by clicking the "Run" button or pressing `Shift + F10`.
 
-#### 4. Build and Run via Maven
+#### 4. Build and Run via Maven (OPTIONAL)
 1. Navigate to the project directory in your terminal.
 2. Build the project:
    ```bash
