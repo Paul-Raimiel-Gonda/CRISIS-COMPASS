@@ -117,7 +117,7 @@ git clone https://github.com/Paul-Raimiel-Gonda/CRISIS-COMPASS.git
    ```
 
 #### 3. Open the Project in IntelliJ IDEA
-1. Open IntelliJ IDEA and load the project directory.
+1. Open IntelliJ IDEA (or any suitable IDE) and load the project directory.
 2. Navigate to `src/main/java` and locate the `MainApp.java` file.
 3. Run the program by clicking the "Run" button or pressing `Shift + F10`.
 
