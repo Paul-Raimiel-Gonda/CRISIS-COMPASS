@@ -3,9 +3,6 @@ package disasters;
 import services.DisasterTipService;
 import java.util.List;
 
-/**
- * Abstract class representing a generic disaster.
- */
 public abstract class Disaster {
     private final String name;
     private final String description;
