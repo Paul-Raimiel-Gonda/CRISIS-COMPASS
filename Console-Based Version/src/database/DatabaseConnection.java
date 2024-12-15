@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     // Encapsulating database details
-    private static final String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/crisiscompass";
-    private static final String DATABASE_USER = "raim";
-    private static final String DATABASE_PASSWORD = "Dagon086";
+    private static final String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/schemaname";
+    private static final String DATABASE_USER = "username";
+    private static final String DATABASE_PASSWORD = "password";
 
     // Singleton instance of the DatabaseConnection
     private static DatabaseConnection instance;
